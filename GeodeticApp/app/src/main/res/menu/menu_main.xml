@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/map_menu_button"
+        app:showAsAction="ifRoom"
+        android:title="@string/map_menu"
+        android:onClick="onMapButtonClick"/>
+    <item
+        android:id="@+id/points_menu_button"
+        app:showAsAction="ifRoom"
+        android:title="@string/points_menu"
+        android:onClick="onPointsButtonClick"/>
+    <item
+        android:id="@+id/settings_menu_button"
+        app:showAsAction="ifRoom"
+        android:title="@string/settings_menu"
+        android:onClick="onSettingsButtonClick"/>
+</menu>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#25C054</color>
+    <color name="colorPrimaryDark">#187432</color>
+    <color name="colorAccent">#f9b30f</color>
+    <color name="colorBackground">#c1c1c1</color>
+    <color name="compassNeedleN">#df1d1d</color>
+    <color name="compassNeedleEW">#c2c1c6</color>
+    <color name="compassNeedleS">#1919f5</color>
+    <color name="compassBackground">#3d3d3d</color>
+</resources>

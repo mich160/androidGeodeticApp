@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GeodeticApp</string>
+    <string name="edit">Edytuj</string>
+    <string name="follow">Podążaj</string>
+    <string name="map_menu">Mapa</string>
+    <string name="points_menu">Punkty</string>
+    <string name="settings_menu">Ustawienia</string>
+    <string name="show_compass">Pokaż kompas</string>
+    <string name="show_gs2000">Pokaż GS2000 na mapie</string>
+    <string name="show_wsg84">Pokaż WSG84 na mapie</string>
+</resources>

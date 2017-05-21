@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GeodeticApp</string>
+    <string name="google_maps_key" translatable="false">AIzaSyB0bTQS6JTwZdMM96zV5LM4xABpSVYYr4c</string>
+    <string name="edit">Edit</string>
+    <string name="follow">Follow</string>
+    <string name="map_menu">Map</string>
+    <string name="points_menu">Points</string>
+    <string name="settings_menu">Settings</string>
+    <string name="show_compass">Show compass</string>
+    <string name="show_wsg84">Show WSG84 on map</string>
+    <string name="show_gs2000">Show GS2000 on map</string>
+</resources>
