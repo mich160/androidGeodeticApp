@@ -2,11 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="student.pl.edu.pb.geodeticapp">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/geodeticapp_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/geodeticapp_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -29,8 +30,9 @@
             android:name=".activities.SettingsActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activities.EditPointActivity" />
-        <activity android:name=".activities.AboutActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:launchMode="singleTask" />
 
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         ...

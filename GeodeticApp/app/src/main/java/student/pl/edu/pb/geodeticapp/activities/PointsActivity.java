@@ -2,7 +2,6 @@ package student.pl.edu.pb.geodeticapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -57,12 +56,11 @@ public class PointsActivity extends BaseActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode == RESULT_OK){
-            if(requestCode == EditPointActivity.CREATE_MODE ){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == EditPointActivity.CREATE_MODE) {
                 savePointToDB((GeoPoint) data.getSerializableExtra(EditPointActivity.RESULT_KEY));
-            }
-            else if(requestCode == EditPointActivity.EDIT_MODE){
+            } else if (requestCode == EditPointActivity.EDIT_MODE) {
                 updatePointToDB((GeoPoint) data.getSerializableExtra(EditPointActivity.RESULT_KEY));
                 loadDataFromDB();
             }
@@ -75,8 +73,8 @@ public class PointsActivity extends BaseActivity {
         startActivityForResult(newPointIntent, EditPointActivity.CREATE_MODE);
     }
 
-    public void onRemovePointButtonClick(View button){
-        if (listAdapter.isSelectable()){
+    public void onRemovePointButtonClick(View button) {
+        if (listAdapter.isSelectable()) {
             deleteButton.setVisibility(View.GONE);
             cancelDeleteButton.setVisibility(View.GONE);
             removePointsFromDB(listAdapter.getSelected());
@@ -87,61 +85,60 @@ public class PointsActivity extends BaseActivity {
 
 
     public void onCancelPointRemovalButtonClick(View view) {
-        if (listAdapter.isSelectable()){
+        if (listAdapter.isSelectable()) {
             deleteButton.setVisibility(View.GONE);
             cancelDeleteButton.setVisibility(View.GONE);
             listAdapter.setSelectable(false);
         }
     }
 
-    private void initPointsPersistence(){
+    private void initPointsPersistence() {
         geoPointDAO = new GeoPointDAO(new GeoDBHelper(getApplicationContext()));
     }
 
-    private void loadDataFromDB(){
+    private void loadDataFromDB() {
         listAdapter.clear();
         listAdapter.addAll(geoPointDAO.getAll());
     }
 
-    private void updatePointToDB(GeoPoint point){
+    private void updatePointToDB(GeoPoint point) {
         this.geoPointDAO.update(point);
         listAdapter.updateItem(point);
     }
 
-    private void removePointFromDB(GeoPoint point){
+    private void removePointFromDB(GeoPoint point) {
         this.geoPointDAO.deleteByID(point.getId());
     }
 
-    private void removePointsFromDB(List<GeoPoint> points){
-        for(GeoPoint point: points){
+    private void removePointsFromDB(List<GeoPoint> points) {
+        for (GeoPoint point : points) {
             removePointFromDB(point);
         }
     }
 
-    private void savePointToDB(GeoPoint point){
+    private void savePointToDB(GeoPoint point) {
         long pointID = this.geoPointDAO.save(point);
-        if(pointID < 0){
+        if (pointID < 0) {
             showToastMsg(getString(R.string.save_point_error));
-        }
-        else {
+        } else {
             point.setId(pointID);
             listAdapter.addItem(point);
             showToastMsg(getString(R.string.save_point_success));
         }
     }
 
-    private void showToastMsg(String text){
+    private void showToastMsg(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    private void initListeners(){
+    private void initListeners() {
         filterEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String filterText = filterEditText.getText().toString();
                     listAdapter.clearFilters();
-                    if(!filterText.equals("")){
+                    if (!filterText.equals("")) {
                         listAdapter.addFilter(GeoPointsListAdapter.getNameFilter(filterText));
                     }
                     return true;
@@ -152,7 +149,7 @@ public class PointsActivity extends BaseActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!listAdapter.isSelectable()){
+                if (!listAdapter.isSelectable()) {
                     listAdapter.setSelectable(true);
                     listAdapter.selectItem(position);
                     deleteButton.setVisibility(View.VISIBLE);
@@ -165,15 +162,13 @@ public class PointsActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(listAdapter.isSelectable()){
-                    if(!listAdapter.isSelected(position)){
+                if (listAdapter.isSelectable()) {
+                    if (!listAdapter.isSelected(position)) {
                         listAdapter.selectItem(position);
-                    }
-                    else {
+                    } else {
                         listAdapter.deselectItem(position);
                     }
-                }
-                else {
+                } else {
                     Intent newPointIntent = new Intent(PointsActivity.this, EditPointActivity.class);
                     newPointIntent.putExtra(EditPointActivity.MODE_KEY, EditPointActivity.EDIT_MODE);
                     newPointIntent.putExtra(EditPointActivity.PARAMETER_KEY, (Serializable) listAdapter.getItem(position));

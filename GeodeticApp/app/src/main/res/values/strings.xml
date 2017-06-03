@@ -25,15 +25,22 @@
     <string name="ygausskruger">Ygk</string>
     <string name="ok_button">OK</string>
     <string name="point_name_placeholder">Name</string>
-    <string name="latitude_format">Lat: %f</string>
-    <string name="longitude_format">Long: %f</string>
-    <string name="xgk_format">Xgk: %f</string>
-    <string name="ygk_format">Ygk: %f</string>
+    <string name="latitude_format_long">Lat: %f</string>
+    <string name="longitude_format_long">Long: %f</string>
+    <string name="xgk_format_long">Xgk: %f</string>
+    <string name="ygk_format_long">Ygk: %f</string>
+    <string name="latitude_format_short">Lat: %.3f</string>
+    <string name="longitude_format_short">Long: %.3f</string>
+    <string name="xgk_format_short">Xgk: %.3f</string>
+    <string name="ygk_format_short">Ygk: %.3f</string>
     <string name="save_point_error">Error. Couldn\'t save the point!</string>
     <string name="save_point_success">Point saved.</string>
+    <string name="gps_init_error">Error. No permission granted for GPS!</string>
+    <string name="point_not_selected_error">There\'s no point selected!</string>
     <string name="double_validate_error">Field should be a real number!</string>
     <string name="name_validate_error">Field can\'t be empty!</string>
     <string name="about_menu">About</string>
-    <string name="author">Autor: Michał Fabiański</string>
+    <string name="author">Author: Michał Fabiański</string>
     <string name="creation_year">2017</string>
+    <string name="zone_placeholder">Unknown zone</string>
 </resources>

@@ -2,7 +2,7 @@ package student.pl.edu.pb.geodeticapp.data.entities;
 
 import java.io.Serializable;
 
-public class GeoPoint implements Serializable{
+public class GeoPoint implements Serializable {
     private long id;
     private String name;
     private double latitude;
@@ -10,11 +10,11 @@ public class GeoPoint implements Serializable{
     private double xGK;
     private double yGK;
 
-    public GeoPoint(){
+    public GeoPoint() {
 
     }
 
-    public GeoPoint(GeoPoint point){
+    public GeoPoint(GeoPoint point) {
         this.id = point.getId();
         this.name = point.getName();
         this.latitude = point.getLatitude();
@@ -23,17 +23,22 @@ public class GeoPoint implements Serializable{
         this.yGK = point.getyGK();
     }
 
-    public GeoPoint(String name){
+    public GeoPoint(String name) {
         this.name = name;
     }
 
-    public GeoPoint(long id, String name, double latitude, double longitude, double xGK, double yGK){
+    public GeoPoint(long id, String name, double latitude, double longitude, double xGK, double yGK) {
         this(name);
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.xGK = xGK;
         this.yGK = yGK;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) this.getId();
     }
 
     public long getId() {

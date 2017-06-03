@@ -25,14 +25,21 @@
     <string name="xgausskruger">Xgk</string>
     <string name="ygausskruger">Ygk</string>
     <string name="double_validate_error">Pole powinno zawierać liczbę rzeczywistą!</string>
-    <string name="latitude_format">Szer: %f</string>
-    <string name="longitude_format">Dł: %f</string>
+    <string name="latitude_format_long">Szer: %.6f</string>
+    <string name="longitude_format_long">Dł: %.6f</string>
     <string name="point_name_placeholder">Nazwa</string>
     <string name="save_point_error">Błąd. Nie zapisano punktu!</string>
     <string name="save_point_success">Zapisano punkt.</string>
-    <string name="xgk_format">Xgk: %f</string>
-    <string name="ygk_format">Ygk: %f</string>
+    <string name="xgk_format_long">Xgk: %.6f</string>
+    <string name="ygk_format_long">Ygk: %.6f</string>
     <string name="name_validate_error">Pole nie może być pusta!</string>
     <string name="about_menu">O aplikacji</string>
     <string name="author">Autor: Michał Fabiański</string>
+    <string name="gps_init_error">Błąd. Nie udzielono pozwolenia na GPS!</string>
+    <string name="point_not_selected_error">Nie zaznaczono punktu!</string>
+    <string name="latitude_format_short">Szer: %.3f</string>
+    <string name="longitude_format_short">Dł: %.3f</string>
+    <string name="xgk_format_short">Xgk: %.3f</string>
+    <string name="ygk_format_short">Ygk: %.3f</string>
+    <string name="zone_placeholder">Nieznana strefa</string>
 </resources>

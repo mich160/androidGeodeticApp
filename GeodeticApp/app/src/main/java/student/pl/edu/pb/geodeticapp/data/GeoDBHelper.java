@@ -19,7 +19,7 @@ public class GeoDBHelper extends SQLiteOpenHelper {
             "  YGK REAL\n" +
             ");";
 
-    public GeoDBHelper(Context context){
+    public GeoDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

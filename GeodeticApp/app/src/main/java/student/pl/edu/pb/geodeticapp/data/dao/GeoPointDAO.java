@@ -18,15 +18,15 @@ public class GeoPointDAO implements GenericDAO<GeoPoint> {
     private GeoDBHelper dbHelper;
     private SQLiteDatabase database;
 
-    public GeoPointDAO(GeoDBHelper dbHelper){
+    public GeoPointDAO(GeoDBHelper dbHelper) {
         this.dbHelper = dbHelper;
         this.database = dbHelper.getWritableDatabase();
     }
 
     @Override
     public GeoPoint getByID(long id) {
-        Cursor result = database.query(TABLE_NAME, ALL_COLUMNS, "ID = ?", new String[]{Long.toString(id)},null, null, null);
-        if(result.moveToNext()){
+        Cursor result = database.query(TABLE_NAME, ALL_COLUMNS, "ID = ?", new String[]{Long.toString(id)}, null, null, null);
+        if (result.moveToNext()) {
             GeoPoint resultPoint = extractGeoPointFromCursor(result);
             result.close();
             return resultPoint;
@@ -38,7 +38,7 @@ public class GeoPointDAO implements GenericDAO<GeoPoint> {
     public List<GeoPoint> getAll() {
         Cursor result = database.query(TABLE_NAME, ALL_COLUMNS, null, null, null, null, null);
         List<GeoPoint> resultList = new ArrayList<>();
-        while (result.moveToNext()){
+        while (result.moveToNext()) {
             resultList.add(extractGeoPointFromCursor(result));
         }
         result.close();
@@ -49,8 +49,8 @@ public class GeoPointDAO implements GenericDAO<GeoPoint> {
     public long save(GeoPoint entity) {
         ContentValues values = new ContentValues();
         values.put(ALL_COLUMNS[1], entity.getName());
-        values.put(ALL_COLUMNS[2], entity.getLongitude());
-        values.put(ALL_COLUMNS[3], entity.getLatitude());
+        values.put(ALL_COLUMNS[2], entity.getLatitude());
+        values.put(ALL_COLUMNS[3], entity.getLongitude());
         values.put(ALL_COLUMNS[4], entity.getxGK());
         values.put(ALL_COLUMNS[5], entity.getyGK());
         return database.insert(TABLE_NAME, null, values);
@@ -60,8 +60,8 @@ public class GeoPointDAO implements GenericDAO<GeoPoint> {
     public void update(GeoPoint entity) {
         ContentValues values = new ContentValues();
         values.put(ALL_COLUMNS[1], entity.getName());
-        values.put(ALL_COLUMNS[2], entity.getLongitude());
-        values.put(ALL_COLUMNS[3], entity.getLatitude());
+        values.put(ALL_COLUMNS[2], entity.getLatitude());
+        values.put(ALL_COLUMNS[3], entity.getLongitude());
         values.put(ALL_COLUMNS[4], entity.getxGK());
         values.put(ALL_COLUMNS[5], entity.getyGK());
         database.update(TABLE_NAME, values, "ID = ?", new String[]{Long.toString(entity.getId())});
@@ -72,7 +72,7 @@ public class GeoPointDAO implements GenericDAO<GeoPoint> {
         database.delete(TABLE_NAME, "ID = ?", new String[]{Long.toString(id)});
     }
 
-    private GeoPoint extractGeoPointFromCursor(Cursor cursor){
-        return new GeoPoint(cursor.getLong(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getDouble(4),cursor.getDouble(5));
+    private GeoPoint extractGeoPointFromCursor(Cursor cursor) {
+        return new GeoPoint(cursor.getLong(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getDouble(5));
     }
 }

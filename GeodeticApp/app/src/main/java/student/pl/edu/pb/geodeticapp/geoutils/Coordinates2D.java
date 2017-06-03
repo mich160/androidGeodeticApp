@@ -1,11 +1,11 @@
 package student.pl.edu.pb.geodeticapp.geoutils;
 
 public class Coordinates2D {
-    public static Coordinates2D ofArray(double[] xyArray){
+    public static Coordinates2D ofArray(double[] xyArray) {
         return new Coordinates2D(xyArray[0], xyArray[1]);
     }
 
-    private double x,y;
+    private double x, y;
 
     public Coordinates2D(double x, double y) {
         this.x = x;
@@ -28,8 +28,8 @@ public class Coordinates2D {
         this.y = y;
     }
 
-    public double[] toArray(){
-        return new double[]{x,y};
+    public double[] toArray() {
+        return new double[]{x, y};
     }
 
     @Override

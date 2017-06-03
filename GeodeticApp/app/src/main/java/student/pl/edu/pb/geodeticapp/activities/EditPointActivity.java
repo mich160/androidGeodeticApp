@@ -2,8 +2,6 @@ package student.pl.edu.pb.geodeticapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.Spinner;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import student.pl.edu.pb.geodeticapp.R;
 import student.pl.edu.pb.geodeticapp.data.entities.GeoPoint;
@@ -24,11 +21,10 @@ import student.pl.edu.pb.geodeticapp.geoutils.Coordinates2D;
 import student.pl.edu.pb.geodeticapp.geoutils.ReferenceSystemConverter;
 import student.pl.edu.pb.geodeticapp.geoutils.exceptions.ReferenceSystemConversionException;
 
-public class EditPointActivity extends BaseActivity{
+public class EditPointActivity extends BaseActivity {
     public static final int CREATE_MODE = 0, EDIT_MODE = 1;
     public static final String PARAMETER_KEY = "geo_point_param", RESULT_KEY = "geo_point_result", MODE_KEY = "point_mode";
 
-    private int currentMode;
     private ReferenceSystemConverter converter;
     private GeoPoint pointData;
     private SparseArray<ReferenceSystemConverter.ReferenceSystem> intToReferenceSystemMap;
@@ -57,18 +53,17 @@ public class EditPointActivity extends BaseActivity{
         initZonesHandling();
         initListeners();
 
-        currentMode = getIntent().getIntExtra(MODE_KEY, -1);
-        if(currentMode == CREATE_MODE){
+        int currentMode = getIntent().getIntExtra(MODE_KEY, -1);
+        if (currentMode == CREATE_MODE) {
             pointData = new GeoPoint();
-        }
-        else if(currentMode == EDIT_MODE){
+        } else if (currentMode == EDIT_MODE) {
             pointData = (GeoPoint) getIntent().getSerializableExtra(PARAMETER_KEY);
             loadData();
         }
         converter = new ReferenceSystemConverter();
     }
 
-    private void initZonesHandling(){
+    private void initZonesHandling() {
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.cs2000_zones_array, android.R.layout.simple_spinner_item);
         cs2000zoneSpinner.setAdapter(spinnerAdapter);
         intToReferenceSystemMap = new SparseArray<>();
@@ -83,7 +78,7 @@ public class EditPointActivity extends BaseActivity{
         referenceSystemToIntMap.put(ReferenceSystemConverter.ReferenceSystem.CS2000z8, 3);
     }
 
-    private void initListeners(){
+    private void initListeners() {
 
     }
 
@@ -93,17 +88,18 @@ public class EditPointActivity extends BaseActivity{
         longitudeEditText.setText(String.format(Locale.ENGLISH, "%f", pointData.getLongitude()));
         xGKEditText.setText(String.format(Locale.ENGLISH, "%f", pointData.getxGK()));
         yGKEditText.setText(String.format(Locale.ENGLISH, "%f", pointData.getyGK()));
+        ReferenceSystemConverter.ReferenceSystem targetSystem = CS2000RefSystemPicker.getReferenceSystem(pointData.getLongitude());
+        cs2000zoneSpinner.setSelection(referenceSystemToIntMap.get(targetSystem));
     }
 
-    private boolean applyData(){
+    private boolean applyData() {
         boolean stepOneValidation = validateName();
         stepOneValidation = stepOneValidation && validateSpinner();
-        if (stepOneValidation){
-            if (validateWSG84()){
+        if (stepOneValidation) {
+            if (validateWSG84()) {
                 convertToCS2000();
                 return true;
-            }
-            else if(validateCS2000()){
+            } else if (validateCS2000()) {
                 convertToWSG84();
                 return true;
             }
@@ -111,8 +107,8 @@ public class EditPointActivity extends BaseActivity{
         return false;
     }
 
-    private boolean validateName(){
-        if(nameEditText.getText().toString().equals("")){
+    private boolean validateName() {
+        if (nameEditText.getText().toString().equals("")) {
             nameEditText.setError(getString(R.string.name_validate_error));
             return false;
         }
@@ -120,46 +116,46 @@ public class EditPointActivity extends BaseActivity{
         return true;
     }
 
-    private boolean validateSpinner(){
+    private boolean validateSpinner() {
         return cs2000zoneSpinner.getSelectedItemPosition() != AdapterView.INVALID_POSITION;
     }
 
-    private boolean validateWSG84(){
+    private boolean validateWSG84() {
         boolean result = validateDoubleEdit(latitudeEditText);
-        if(result){
+        if (result) {
             result = validateDoubleEdit(longitudeEditText);
         }
         return result;
     }
 
-    private boolean validateCS2000(){
+    private boolean validateCS2000() {
         boolean result = validateDoubleEdit(xGKEditText);
-        if (result){
+        if (result) {
             result = validateDoubleEdit(yGKEditText);
         }
-        if(result){
+        if (result) {
             result = validateSpinner();
         }
         return result;
     }
 
-    private boolean validateDoubleEdit(EditText editText){
+    private boolean validateDoubleEdit(EditText editText) {
         try {
             Double.parseDouble(editText.getText().toString());
             editText.setError(null);
             return true;
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             editText.setError(getString(R.string.double_validate_error));
             return false;
         }
     }
 
-    private void convertToCS2000(){
+    private void convertToCS2000() {
         Coordinates2D coordinates = new Coordinates2D(Double.parseDouble(longitudeEditText.getText().toString()), Double.parseDouble(latitudeEditText.getText().toString()));
         try {
             ReferenceSystemConverter.ReferenceSystem targetSystem = CS2000RefSystemPicker.getReferenceSystem(coordinates.getX());
             cs2000zoneSpinner.setSelection(referenceSystemToIntMap.get(targetSystem));
-            Coordinates2D result = converter.convert(coordinates, ReferenceSystemConverter.ReferenceSystem.WSG84,targetSystem);
+            Coordinates2D result = converter.convert(coordinates, ReferenceSystemConverter.ReferenceSystem.WSG84, targetSystem);
             xGKEditText.setText(String.format(Locale.ENGLISH, "%f", result.getX()));
             yGKEditText.setText(String.format(Locale.ENGLISH, "%f", result.getY()));
         } catch (ReferenceSystemConversionException e) {
@@ -168,20 +164,20 @@ public class EditPointActivity extends BaseActivity{
         }
     }
 
-    private void convertToWSG84(){
+    private void convertToWSG84() {
         Coordinates2D coordinates = new Coordinates2D(Double.parseDouble(xGKEditText.getText().toString()), Double.parseDouble(yGKEditText.getText().toString()));
         try {
             ReferenceSystemConverter.ReferenceSystem sourceSystem = intToReferenceSystemMap.get(cs2000zoneSpinner.getSelectedItemPosition());
             Coordinates2D result = converter.convert(coordinates, sourceSystem, ReferenceSystemConverter.ReferenceSystem.WSG84);
-            latitudeEditText.setText(String.format(Locale.ENGLISH, "%f", result.getX()));
-            longitudeEditText.setText(String.format(Locale.ENGLISH, "%f", result.getY()));
+            latitudeEditText.setText(String.format(Locale.ENGLISH, "%f", result.getY()));
+            longitudeEditText.setText(String.format(Locale.ENGLISH, "%f", result.getX()));
         } catch (ReferenceSystemConversionException e) {
             Log.e("point_conversion", "Couldn't convert point!");
             e.printStackTrace();
         }
     }
 
-    private void saveFieldsToPoint(){
+    private void saveFieldsToPoint() {
         pointData.setName(nameEditText.getText().toString());
         pointData.setLatitude(Double.parseDouble(latitudeEditText.getText().toString()));
         pointData.setLongitude(Double.parseDouble(longitudeEditText.getText().toString()));
@@ -190,7 +186,7 @@ public class EditPointActivity extends BaseActivity{
     }
 
     public void onConfirmPointButtonClick(View view) {
-        if (applyData()){
+        if (applyData()) {
             saveFieldsToPoint();
             Intent returnIntent = new Intent();
             returnIntent.putExtra(RESULT_KEY, pointData);
@@ -199,14 +195,14 @@ public class EditPointActivity extends BaseActivity{
         }
     }
 
-    public void onConvertToCS2000ButtonClick(View view){
-        if(validateWSG84()){
+    public void onConvertToCS2000ButtonClick(View view) {
+        if (validateWSG84()) {
             convertToCS2000();
         }
     }
 
-    public void onConvertToWSG84ButtonClick(View view){
-        if(validateCS2000()){
+    public void onConvertToWSG84ButtonClick(View view) {
+        if (validateCS2000()) {
             convertToWSG84();
         }
     }

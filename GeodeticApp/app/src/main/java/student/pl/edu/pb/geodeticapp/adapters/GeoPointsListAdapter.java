@@ -1,7 +1,6 @@
 package student.pl.edu.pb.geodeticapp.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +20,12 @@ import student.pl.edu.pb.geodeticapp.data.entities.GeoPoint;
 
 public class GeoPointsListAdapter extends BaseAdapter {
 
-    public interface GeoPointFilter{
+    public interface GeoPointFilter {
         boolean matches(GeoPoint geoPoint);
     }
 
-    public static GeoPointFilter getNameFilter(final String name){
-        if(name != null && !name.equals("")){
+    public static GeoPointFilter getNameFilter(final String name) {
+        if (name != null && !name.equals("")) {
             return new GeoPointFilter() {
                 @Override
                 public boolean matches(GeoPoint geoPoint) {
@@ -45,50 +44,50 @@ public class GeoPointsListAdapter extends BaseAdapter {
     private boolean selectable;
     private int selectionColor;
 
-    public GeoPointsListAdapter(Context context){
+    public GeoPointsListAdapter(Context context) {
         this.geoPointList = new ArrayList<>();
         this.filteredGeoPointsList = new ArrayList<>();
         this.filtersList = new ArrayList<>();
         this.selectedIndexes = new TreeSet<>();
         this.appContext = context;
-        this.selectionColor = ContextCompat.getColor(appContext,R.color.colorPrimaryDark);
+        this.selectionColor = ContextCompat.getColor(appContext, R.color.colorPrimaryDark);
     }
 
-    public void addAll(List<GeoPoint> points){
-        for (GeoPoint point: points) {
+    public void addAll(List<GeoPoint> points) {
+        for (GeoPoint point : points) {
             geoPointList.add(point);
         }
         applyFilters();
     }
 
-    public void addItem(GeoPoint geoPoint){
+    public void addItem(GeoPoint geoPoint) {
         geoPointList.add(geoPoint);
         applyFilters();
     }
 
-    public void removeItem(GeoPoint geoPoint){
+    public void removeItem(GeoPoint geoPoint) {
         geoPointList.remove(geoPoint);
         applyFilters();
     }
 
-    public void removeItem(int i){
+    public void removeItem(int i) {
         geoPointList.remove(i);
         applyFilters();
     }
 
-    public List<GeoPoint> getSelected(){
+    public List<GeoPoint> getSelected() {
         List<GeoPoint> result = new ArrayList<>();
-        for(int index: selectedIndexes){
+        for (int index : selectedIndexes) {
             result.add((GeoPoint) getItem(index));
         }
         return result;
     }
 
-    public void updateItem(GeoPoint geoPoint){
+    public void updateItem(GeoPoint geoPoint) {
         int index = 0;
-        for(; index < geoPointList.size(); index++){
+        for (; index < geoPointList.size(); index++) {
             GeoPoint listPoint = geoPointList.get(index);
-            if(geoPoint.getId() == listPoint.getId()){
+            if (geoPoint.getId() == listPoint.getId()) {
                 break;
             }
         }
@@ -96,22 +95,22 @@ public class GeoPointsListAdapter extends BaseAdapter {
         applyFilters();
     }
 
-    public void clear(){
+    public void clear() {
         geoPointList.clear();
         applyFilters();
     }
 
-    public List<GeoPoint> getAll(){
+    public List<GeoPoint> getAll() {
         return geoPointList;
     }
 
-    public void addFilter(GeoPointFilter filter){
+    public void addFilter(GeoPointFilter filter) {
         this.filtersList.add(filter);
         applyFilters();
     }
 
-    public void clearFilters(){
-        if(!this.filtersList.isEmpty()){
+    public void clearFilters() {
+        if (!this.filtersList.isEmpty()) {
             this.filtersList.clear();
             applyFilters();
         }
@@ -129,16 +128,16 @@ public class GeoPointsListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return ((GeoPoint)getItem(position)).getId();
+        return ((GeoPoint) getItem(position)).getId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GeoPoint geoPoint = (GeoPoint) getItem(position);
         LayoutInflater inflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View resultView = inflater.inflate(R.layout.point_list_element,null);
+        View resultView = inflater.inflate(R.layout.point_list_element, null);
         LinearLayout rootLayout = (LinearLayout) resultView.findViewById(R.id.list_element_root);
-        if(selectable && isSelected(position)){
+        if (selectable && isSelected(position)) {
             rootLayout.setBackgroundColor(selectionColor);
         }
         TextView nameText = (TextView) resultView.findViewById(R.id.point_name_text);
@@ -148,10 +147,10 @@ public class GeoPointsListAdapter extends BaseAdapter {
         TextView ygkText = (TextView) resultView.findViewById(R.id.point_ygk_text);
 
         nameText.setText(geoPoint.getName());
-        latitudeText.setText(String.format(appContext.getString(R.string.latitude_format), geoPoint.getLatitude()));
-        longitudeText.setText(String.format(appContext.getString(R.string.longitude_format), geoPoint.getLongitude()));
-        xgkText.setText(String.format(appContext.getString(R.string.xgk_format), geoPoint.getxGK()));
-        ygkText.setText(String.format(appContext.getString(R.string.ygk_format), geoPoint.getyGK()));
+        latitudeText.setText(String.format(appContext.getString(R.string.latitude_format_long), geoPoint.getLatitude()));
+        longitudeText.setText(String.format(appContext.getString(R.string.longitude_format_long), geoPoint.getLongitude()));
+        xgkText.setText(String.format(appContext.getString(R.string.xgk_format_long), geoPoint.getxGK()));
+        ygkText.setText(String.format(appContext.getString(R.string.ygk_format_long), geoPoint.getyGK()));
         return resultView;
     }
 
@@ -161,23 +160,23 @@ public class GeoPointsListAdapter extends BaseAdapter {
 
     public void setSelectable(boolean selectable) {
         this.selectable = selectable;
-        if(!selectable){
+        if (!selectable) {
             this.selectedIndexes.clear();
         }
         notifyDataSetChanged();
     }
 
-    public void selectItem(int index){
+    public void selectItem(int index) {
         selectedIndexes.add(index);
         notifyDataSetChanged();
     }
 
-    public void deselectItem(int index){
+    public void deselectItem(int index) {
         selectedIndexes.remove(index);
         notifyDataSetChanged();
     }
 
-    public void deselectAll(){
+    public void deselectAll() {
         selectedIndexes.clear();
     }
 
@@ -193,16 +192,16 @@ public class GeoPointsListAdapter extends BaseAdapter {
         this.selectionColor = selectionColor;
     }
 
-    private void applyFilters(){
+    private void applyFilters() {
         filteredGeoPointsList.clear();
-        for(GeoPoint point: geoPointList){
+        for (GeoPoint point : geoPointList) {
             boolean passesFilters = true;
-            for(GeoPointFilter filter: filtersList){
-                if(!filter.matches(point)){
+            for (GeoPointFilter filter : filtersList) {
+                if (!filter.matches(point)) {
                     passesFilters = false;
                 }
             }
-            if(passesFilters){
+            if (passesFilters) {
                 filteredGeoPointsList.add(point);
             }
         }

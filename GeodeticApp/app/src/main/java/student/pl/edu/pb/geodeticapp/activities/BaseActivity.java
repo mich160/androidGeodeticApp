@@ -11,20 +11,20 @@ import student.pl.edu.pb.geodeticapp.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState){
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -50,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onAboutButtonCick(MenuItem item){
+    public void onAboutButtonCick(MenuItem item) {
         Intent intent = new Intent(this, AboutActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

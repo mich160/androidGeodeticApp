@@ -7,16 +7,16 @@
             android:key="pref_key_show_compass"
             android:title="@string/show_compass"
             android:summary="@string/show_compass_summary"
-            android:defaultValue="true"/>
+            android:defaultValue="true" />
         <CheckBoxPreference
             android:key="pref_key_show_wsg84"
             android:title="@string/show_wsg84"
             android:summary="@string/show_wsg84_summary"
-            android:defaultValue="true"/>
+            android:defaultValue="true" />
         <CheckBoxPreference
             android:key="pref_key_show_cs2000"
             android:title="@string/show_cs2000"
             android:summary="@string/show_cs2000_summary"
-            android:defaultValue="true"/>
+            android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>

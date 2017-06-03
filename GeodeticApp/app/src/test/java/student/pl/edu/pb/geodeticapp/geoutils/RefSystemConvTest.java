@@ -15,7 +15,7 @@ public class RefSystemConvTest {
             double expectedZ5X = 5465591.141312;
             double expectedZ5Y = 5810244.142346;
             Coordinates2D resultCoordinates = converter.convert(wsg84Coordinates, ReferenceSystemConverter.ReferenceSystem.WSG84, CS2000RefSystemPicker.getReferenceSystem(wsg84Coordinates.getX()));
-            if (BuildConfig.DEBUG && difference(expectedZ5X, resultCoordinates.getX()) > 1 && difference(expectedZ5Y, resultCoordinates.getY()) > 1) {
+            if (BuildConfig.DEBUG && difference(expectedZ5X, resultCoordinates.getX()) > 1.0 && difference(expectedZ5Y, resultCoordinates.getY()) > 1.0) {
                 throw new AssertionError();
             }
             //ZONE 6 TEST
@@ -23,7 +23,7 @@ public class RefSystemConvTest {
             double expectedZ6X = 6457013.311331;
             double expectedZ6Y = 5893870.244391;
             resultCoordinates = converter.convert(wsg84Coordinates, ReferenceSystemConverter.ReferenceSystem.WSG84, CS2000RefSystemPicker.getReferenceSystem(wsg84Coordinates.getX()));
-            if (BuildConfig.DEBUG && difference(expectedZ6X, resultCoordinates.getX()) > 1 && difference(expectedZ6Y, resultCoordinates.getY()) > 1) {
+            if (BuildConfig.DEBUG && difference(expectedZ6X, resultCoordinates.getX()) > 1.0 && difference(expectedZ6Y, resultCoordinates.getY()) > 1.0) {
                 throw new AssertionError();
             }
             //ZONE 7 TEST
@@ -31,7 +31,7 @@ public class RefSystemConvTest {
             double expectedZ7X = 7507159.59808;
             double expectedZ7Y = 5788347.248294;
             resultCoordinates = converter.convert(wsg84Coordinates, ReferenceSystemConverter.ReferenceSystem.WSG84, CS2000RefSystemPicker.getReferenceSystem(wsg84Coordinates.getX()));
-            if (BuildConfig.DEBUG && difference(expectedZ7X, resultCoordinates.getX()) > 1 && difference(expectedZ7Y, resultCoordinates.getY()) > 1) {
+            if (BuildConfig.DEBUG && difference(expectedZ7X, resultCoordinates.getX()) > 1.0 && difference(expectedZ7Y, resultCoordinates.getY()) > 1.0) {
                 throw new AssertionError();
             }
             //ZONE 8 TEST
@@ -39,7 +39,7 @@ public class RefSystemConvTest {
             double expectedZ8X = 8442628.61201;
             double expectedZ8Y = 5889587.322149;
             resultCoordinates = converter.convert(wsg84Coordinates, ReferenceSystemConverter.ReferenceSystem.WSG84, CS2000RefSystemPicker.getReferenceSystem(wsg84Coordinates.getX()));
-            if (BuildConfig.DEBUG && difference(expectedZ8X, resultCoordinates.getX()) > 1 && difference(expectedZ8Y, resultCoordinates.getY()) > 1) {
+            if (BuildConfig.DEBUG && difference(expectedZ8X, resultCoordinates.getX()) > 1.0 && difference(expectedZ8Y, resultCoordinates.getY()) > 1.0) {
                 throw new AssertionError();
             }
             //REVERSE TEST
