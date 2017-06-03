@@ -1,15 +1,23 @@
 package student.pl.edu.pb.geodeticapp.activities;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
+import java.util.List;
+
 import student.pl.edu.pb.geodeticapp.R;
+import student.pl.edu.pb.geodeticapp.data.GeoDBHelper;
+import student.pl.edu.pb.geodeticapp.data.dao.GeoPointDAO;
+import student.pl.edu.pb.geodeticapp.data.entities.GeoPoint;
 import student.pl.edu.pb.geodeticapp.views.CompassView;
 
 public class MainActivity extends BaseActivity{
@@ -89,9 +97,52 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-    private CompassHandler compassHandler;
+    private class GPSHandler implements LocationListener{
 
+        public GPSHandler(){
+
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+
+        private void start(){
+
+        }
+
+        private void stop(){
+
+        }
+    }
+
+    private CompassHandler compassHandler;
     private CompassView compass;
+
+    private SharedPreferences sharedPreferences;
+    private GeoPointDAO geoPointDAO;
+
+    private boolean showWSG84;
+    private boolean showCS2000;
+    private boolean showCompass;
+
+    private List<GeoPoint> geoPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +150,11 @@ public class MainActivity extends BaseActivity{
         setContentView(R.layout.activity_main);
 
         initViews();
-//        checkSettings();
+        initData();
         compassHandler = new CompassHandler(compass);
+        loadSettings();
+        checkCompassVisibility();
+        reloadData();
     }
 
     private void initViews(){
@@ -110,8 +164,10 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void onResume(){
         super.onResume();
-//        checkSettings();
+        loadSettings();
         compassHandler.start();
+        checkCompassVisibility();
+        reloadData();
     }
 
     @Override
@@ -126,24 +182,48 @@ public class MainActivity extends BaseActivity{
         compassHandler.stop();
     }
 
-//    private void checkSettings(){
-//        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-//        if(!sharedPreferences.contains(SettingsActivity.INITIALIZED_KEY)){
-//            SharedPreferences.Editor spEditor = sharedPreferences.edit();
-//            spEditor.putBoolean(SettingsActivity.SHOW_COMPASS_KEY, SettingsActivity.SHOW_COMPASS_DEFAULT);
-//            spEditor.putBoolean(SettingsActivity.SHOW_WSG84_KEY, SettingsActivity.SHOW_WSG84_DEFAULT);
-//            spEditor.putBoolean(SettingsActivity.SHOW_GS2000_KEY, SettingsActivity.SHOW_GS2000_DEFAULT);
-//            spEditor.putBoolean(SettingsActivity.INITIALIZED_KEY, true);
-//            spEditor.commit();
-//        }
-//        if(sharedPreferences.contains(SettingsActivity.INITIALIZED_KEY)){
-//            if(sharedPreferences.getBoolean(SettingsActivity.SHOW_COMPASS_KEY, true)){
-//                compass.setVisibility(View.VISIBLE);
-//            }
-//            else {
-//                compass.setVisibility(View.GONE);
-//            }
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //TODO gdy punkt jest edytowany
+    }
+
+    private void loadSettings(){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        showCompass = sharedPreferences.getBoolean(SettingsActivity.SHOW_COMPASS_KEY, true);
+        showCS2000 = sharedPreferences.getBoolean(SettingsActivity.SHOW_CS2000_KEY, true);
+        showWSG84 = sharedPreferences.getBoolean(SettingsActivity.SHOW_WSG84_KEY, true);
+    }
+
+    private void initData(){
+        geoPointDAO = new GeoPointDAO(new GeoDBHelper(getApplicationContext()));
+    }
+
+    private void reloadData(){
+        geoPoints = geoPointDAO.getAll();
+        drawPoints();
+        //TODO wyswietlanie
+    }
+
+    private void drawPoints() {
+
+    }
+
+    private void drawPoint(GeoPoint point){
+
+    }
+
+    private void drawCurrentPosition(){
+
+    }
+
+    private void checkCompassVisibility(){
+        if(showCompass){
+            compass.setVisibility(View.VISIBLE);
+        }
+        else {
+            compass.setVisibility(View.GONE);
+        }
+    }
 
 }

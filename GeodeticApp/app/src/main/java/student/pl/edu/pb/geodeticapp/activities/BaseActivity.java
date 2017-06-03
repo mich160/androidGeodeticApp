@@ -31,18 +31,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onMapButtonClick(MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public void onPointsButtonClick(MenuItem item) {
         Intent intent = new Intent(this, PointsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public void onSettingsButtonClick(MenuItem item) {
         Intent intent = new Intent(this, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
-    //TODO load settings?
+    public void onAboutButtonCick(MenuItem item){
+        Intent intent = new Intent(this, AboutActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }

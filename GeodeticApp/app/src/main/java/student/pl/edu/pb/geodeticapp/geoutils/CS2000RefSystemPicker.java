@@ -1,6 +1,6 @@
 package student.pl.edu.pb.geodeticapp.geoutils;
 
-public class GS2000RefSystemPicker {
+public class CS2000RefSystemPicker {
     private final static double FIRST_LT = 16.5;
     private final static double SECOND_LT = 19.5;
     private final static double THIRD_LT = 22.5;

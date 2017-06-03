@@ -29,9 +29,6 @@ repositories {
     maven {
         url "http://maven.geotoolkit.org/"
     }
-    maven {
-        url "http://download.osgeo.org/webdav/geotools/"
-    }
     jcenter()
 }
 
@@ -41,10 +38,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'org.geotools:gt-shapefile:14.0'
+    compile 'org.osgeo:proj4j:0.1.0'
     compile 'com.akexorcist:googledirectionlibrary:1.0.5'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'org.geotools:gt-shapefile:14.0'
     testCompile 'junit:junit:4.12'
 }

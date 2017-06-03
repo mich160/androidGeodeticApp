@@ -1,41 +1,48 @@
 package student.pl.edu.pb.geodeticapp.geoutils;
 
-import org.geotools.referencing.CRS;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
-import org.opengis.referencing.operation.TransformException;
+import org.osgeo.proj4j.CRSFactory;
+import org.osgeo.proj4j.CoordinateReferenceSystem;
+import org.osgeo.proj4j.CoordinateTransform;
+import org.osgeo.proj4j.CoordinateTransformFactory;
+import org.osgeo.proj4j.ProjCoordinate;
 
-import student.pl.edu.pb.geodeticapp.geoutils.exceptions.ReferenceSystemConvertException;
+import student.pl.edu.pb.geodeticapp.geoutils.exceptions.ReferenceSystemConversionException;
 
 public class ReferenceSystemConverter {
+
     public enum ReferenceSystem{
-        CS2000z5("PROJCS[\"ETRS89 / Poland CS2000 zone 5\",GEOGCS[\"ETRS89\",DATUM[\"European_Terrestrial_Reference_System_1989\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6258\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4258\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",15],PARAMETER[\"scale_factor\",0.999923],PARAMETER[\"false_easting\",5500000],PARAMETER[\"false_northing\",0],AUTHORITY[\"EPSG\",\"2176\"],AXIS[\"y\",EAST],AXIS[\"x\",NORTH]]"),
-        CS2000z6("PROJCS[\"ETRS89 / Poland CS2000 zone 6\",GEOGCS[\"ETRS89\",DATUM[\"European_Terrestrial_Reference_System_1989\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6258\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4258\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",18],PARAMETER[\"scale_factor\",0.999923],PARAMETER[\"false_easting\",6500000],PARAMETER[\"false_northing\",0],AUTHORITY[\"EPSG\",\"2177\"],AXIS[\"y\",EAST],AXIS[\"x\",NORTH]]"),
-        CS2000z7("PROJCS[\"ETRS89 / Poland CS2000 zone 7\",GEOGCS[\"ETRS89\",DATUM[\"European_Terrestrial_Reference_System_1989\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6258\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4258\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",21],PARAMETER[\"scale_factor\",0.999923],PARAMETER[\"false_easting\",7500000],PARAMETER[\"false_northing\",0],AUTHORITY[\"EPSG\",\"2178\"],AXIS[\"y\",EAST],AXIS[\"x\",NORTH]]"),
-        CS2000z8("PROJCS[\"ETRS89 / Poland CS2000 zone 8\",GEOGCS[\"ETRS89\",DATUM[\"European_Terrestrial_Reference_System_1989\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6258\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4258\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",24],PARAMETER[\"scale_factor\",0.999923],PARAMETER[\"false_easting\",8500000],PARAMETER[\"false_northing\",0],AUTHORITY[\"EPSG\",\"2179\"],AXIS[\"y\",EAST],AXIS[\"x\",NORTH]]"),
-        WS84("GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]]");
+        CS2000z5("CS2000z5","+proj=tmerc +lat_0=0 +lon_0=15 +k=0.999923 +x_0=5500000 +y_0=0 +ellps=GRS80 +units=m +no_defs"),
+        CS2000z6("CS2000z6","+proj=tmerc +lat_0=0 +lon_0=18 +k=0.999923 +x_0=6500000 +y_0=0 +ellps=GRS80 +units=m +no_defs"),
+        CS2000z7("CS2000z7","+proj=tmerc +lat_0=0 +lon_0=21 +k=0.999923 +x_0=7500000 +y_0=0 +ellps=GRS80 +units=m +no_defs"),
+        CS2000z8("CS2000z8","+proj=tmerc +lat_0=0 +lon_0=24 +k=0.999923 +x_0=8500000 +y_0=0 +ellps=GRS80 +units=m +no_defs"),
+        WSG84("WSG84","+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs");
 
         private CoordinateReferenceSystem referenceSystem;
 
-        ReferenceSystem(String wkt){
-            try {
-                this.referenceSystem = CRS.parseWKT(wkt);
-            } catch (FactoryException e) {
-                e.printStackTrace();
-            }
+        ReferenceSystem(String name, String proj4){
+            CRSFactory crsFactory = new CRSFactory();
+            referenceSystem = crsFactory.createFromParameters(name, proj4);
         }
     }
 
-    public Coordinates2D convert(Coordinates2D coordinates2D, ReferenceSystem fromSystem, ReferenceSystem toSystem) throws ReferenceSystemConvertException {
-        try {
-            MathTransform mathTransform = CRS.findMathTransform(fromSystem.referenceSystem, toSystem.referenceSystem, true);
-            double[] resultArray = new double[2];
-            mathTransform.transform(coordinates2D.toArray(),0, resultArray, 0, 1);
-            return Coordinates2D.ofArray(resultArray);
-        } catch (FactoryException | TransformException e) {
-            e.printStackTrace();
-            throw new ReferenceSystemConvertException(e);
-        }
+    private CoordinateTransformFactory transformFactory;
+
+    public ReferenceSystemConverter(){
+        transformFactory = new CoordinateTransformFactory();
+    }
+
+    public Coordinates2D convert(Coordinates2D coordinates2D, ReferenceSystem fromSystem, ReferenceSystem toSystem) throws ReferenceSystemConversionException {
+        CoordinateTransform coordinateTransform = transformFactory.createTransform(fromSystem.referenceSystem, toSystem.referenceSystem);
+        ProjCoordinate result = new ProjCoordinate();
+        coordinateTransform.transform(projFromCoords2D(coordinates2D), result);
+        return coords2DFromProj(result);
+    }
+
+    private ProjCoordinate projFromCoords2D(Coordinates2D coordinates2D){
+        return new ProjCoordinate(coordinates2D.getX(), coordinates2D.getY());
+    }
+
+    private Coordinates2D coords2DFromProj(ProjCoordinate projCoordinate){
+        return new Coordinates2D(projCoordinate.x, projCoordinate.y);
     }
 }

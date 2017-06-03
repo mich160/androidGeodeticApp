@@ -17,4 +17,9 @@
         app:showAsAction="ifRoom"
         android:title="@string/settings_menu"
         android:onClick="onSettingsButtonClick"/>
+    <item
+        android:id="@+id/about_menu_button"
+        app:showAsAction="ifRoom"
+        android:title="@string/about_menu"
+        android:onClick="onAboutButtonCick"/>
 </menu>

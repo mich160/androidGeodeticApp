@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cs2000_zones_array">
+        <item>Strefa 5</item>
+        <item>Strefa 6</item>
+        <item>Strefa 7</item>
+        <item>Strefa 8</item>
+    </string-array>
+</resources>

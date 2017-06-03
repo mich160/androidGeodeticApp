@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="student.pl.edu.pb.geodeticapp.activities.PointsActivity">
 
     <include
@@ -11,4 +14,63 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_black_48dp"
+            android:scaleType="centerInside"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/search_points_edit_text"
+            android:hint="@string/search_points_hint"
+            android:maxLines="1"
+            android:imeOptions="actionSearch"
+            android:inputType="text"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cancel_black_48dp"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            android:id="@+id/cancel_point_removal_button"
+            android:onClick="onCancelPointRemovalButtonClick"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_forever_black_48dp"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            android:id="@+id/remove_point_button"
+            android:onClick="onRemovePointButtonClick"/>
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:id="@+id/points_list"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_location_black_48dp"
+            android:scaleType="centerInside"
+            android:onClick="onNewPointButtonClick"/>
+    </LinearLayout>
 </LinearLayout>
